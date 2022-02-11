@@ -17,7 +17,7 @@ class Todo(models.Model):
     status = models.BooleanField(default=False, blank=True)
     date_created = models.DateTimeField(default=timezone.now, blank=True)
     deadline = models.DateTimeField(null=True, blank=True)
-    piority = models.SmallIntegerField(default=1)
+    priority = models.SmallIntegerField(default=1)
 
     class Meta:
         ordering = ['status']
