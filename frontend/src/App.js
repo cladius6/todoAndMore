@@ -99,7 +99,8 @@ function App() {
         <Container maxW="container.xl" centerContent>
           <Heading>ToDo</Heading>
           <AddTodo addTodo={addTodo} />
-          <List width="100%" mt="5" fontSize="20px">
+          <List transition="all 1000ms scale"
+width="100%" mt="5" fontSize="20px">
             {todos.map((todo, index) => (
               <Todo
                 key={index}

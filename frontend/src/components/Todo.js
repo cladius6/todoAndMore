@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import {
   useDisclosure,
   IconButton,
@@ -54,30 +54,18 @@ function TodoItem({
   };
   const dato = new Date(date_created);
 
-  function CheckboxTodo() {
-    let checked = status ? true : false;
+    var checked = status ? true : false;
 
-    const handleChange = () => {
-      completeItem(id);
-    };
-      return (
-        <Checkbox
-          id='checkbox'
-          size=''
-          colorScheme="teal"
-          isChecked={checked}
-          onChange={() => handleChange()}
-        />
-      );
-    }   
+    function handleChange(e){
+      completeItem(id)
+    }
 
   return (
     <ListItem
       as="button"
       p="5px"
       width="100%"
-      transition="all
-                200ms scale"
+      transition="all 1000ms scale"
       _hover={{ boxShadow: 'dark-lg' }}
     >
       <Grid
@@ -87,7 +75,13 @@ function TodoItem({
       >
         <GridItem fontSize="xl" colSpan="2" rowSpan="1" p="0">
           <Box display="flex" justifyContent="left" h="100%">
-            {CheckboxTodo()}
+      <Checkbox
+        id={'checkbox'+id}
+        size=""
+        colorScheme="teal"
+        isChecked={checked}
+        onChange={(e) => handleChange(e)}
+      />
           </Box>
         </GridItem>
         <GridItem colSpan="6" rowSpan="1">
