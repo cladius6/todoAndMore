@@ -61,25 +61,27 @@ function TodoItem({
     };
     if (status === true) {
       return (
-        <Checkbox
-          h="100%"
-          width="100%"
-          isChecked={!checked}
-          onChange={() => handleChange()}
-        >
-          {content}
-        </Checkbox>
+        <Box display="flex" alignItems="center">
+          <Checkbox
+          size='lg'
+            isChecked={!checked}
+            onChange={() => handleChange()}
+            flex="0"
+          />
+          <Box flex="1">{content}</Box>
+        </Box>
       );
     } else {
       return (
-        <Checkbox
-          h="100%"
-          width="100%"
-          isChecked={checked}
-          onChange={() => handleChange()}
-        >
-          {content}
-        </Checkbox>
+        <Box display="flex" alignItems="center">
+          <Checkbox
+          size='lg'
+            isChecked={checked}
+            onChange={() => handleChange()}
+            flex="0"
+          />
+          <Box flex="1">{content}</Box>
+        </Box>
       );
     }
   }
@@ -91,11 +93,10 @@ function TodoItem({
         p="5px"
         width="100%"
         transition="all 200ms scale"
-        _hover={{ bg: 'gray.700' }}
+        _hover={{ boxShadow: 'dark-lg' }}
       >
         <Grid
           justify="center"
-          templateRows="repeat(1, 1fr)"
           templateColumns="repeat(7,1fr)"
         >
           <GridItem fontSize="xl" colSpan="5" rowSpan="1">
@@ -154,14 +155,13 @@ function TodoItem({
         width="100%"
         transition="all
                 200ms scale"
-        _hover={{ bg: 'gray.700' }}
+        _hover={{ boxShadow: 'dark-lg' }}
       >
         <Grid
           justify="center"
-          templateRows="repeat(2,1fr)"
           templateColumns="repeat(7,1fr)"
         >
-          <GridItem fontSize="xl" colSpan="5" rowSpan="1">
+          <GridItem fontSize="xl" colSpan="5" rowSpan="1" p='0'>
             {CheckboxTodo()}
           </GridItem>
 
@@ -212,10 +212,14 @@ function TodoItem({
           <GridItem fontSize="xs" colSpan="5" rowSpan="2" color="gray.400">
             <Accordion allowMultiple>
               <AccordionItem border="none">
-                <AccordionButton _expanded={{ color: 'gray.100' }}>
-                  <Box flex="2">
-                    <AccordionIcon />
-                  </Box>
+                <AccordionButton
+                  _hover={{ boxShadow: 'inner' }}
+                  p="0"
+                  _expanded={{ color: 'gray.100' }}
+                  display="flex"
+                >
+                  <Box h="16px" w="16px" flex="none" />
+                  <AccordionIcon fontSize="28px" flex="1" />
                 </AccordionButton>
                 <AccordionPanel textAlign="left" pb="4">
                   <Box fontSize="16px" color="gray.100">
