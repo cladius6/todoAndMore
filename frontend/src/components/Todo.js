@@ -63,6 +63,7 @@ function TodoItem({
       return (
         <Box display="flex" alignItems="center">
           <Checkbox
+            colorScheme='teal'
           size='lg'
             isChecked={!checked}
             onChange={() => handleChange()}
@@ -75,6 +76,7 @@ function TodoItem({
       return (
         <Box display="flex" alignItems="center">
           <Checkbox
+            colorScheme='teal'
           size='lg'
             isChecked={checked}
             onChange={() => handleChange()}
@@ -120,12 +122,16 @@ function TodoItem({
               h="100%"
             >
               <IconButton
+                colorScheme='teal'
+                fontSize='lg'
                 mr="2"
                 aria-label="edit"
                 onClick={onOpen}
                 icon={<EditIcon />}
               />
               <IconButton
+                colorScheme='teal'
+                fontSize='lg'
                 aria-label="delete"
                 icon={<DeleteIcon />}
                 onClick={onOpenDel}
@@ -184,12 +190,16 @@ function TodoItem({
               h="100%"
             >
               <IconButton
+                colorScheme='teal'
+                fontSize='lg'
                 mr="2"
                 aria-label="edit"
                 onClick={onOpen}
                 icon={<EditIcon />}
               />
               <IconButton
+                colorScheme='teal'
+                fontSize='lg'
                 aria-label="delete"
                 ref={initialRef}
                 icon={<DeleteIcon />}
