@@ -7,6 +7,11 @@ import {
   ListItem,
   Box,
   Checkbox,
+  Accordion,
+  AccordionItem,
+  AccordionButton,
+  AccordionIcon,
+  AccordionPanel,
 } from '@chakra-ui/react';
 import { DeleteIcon, EditIcon } from '@chakra-ui/icons';
 import TodoExt from './TodoExt.js';
@@ -21,9 +26,9 @@ function TodoItem({
   deadline,
   priority,
   completeItem,
-    editTodo,
+  editTodo,
   deleteTodo,
-}){
+}) {
   const initialRef = React.useRef();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const {
@@ -49,7 +54,7 @@ function TodoItem({
   const dato = new Date(date_created);
 
   function CheckboxTodo() {
-    let checked =false;
+    let checked = false;
 
     const handleChange = () => {
       completeItem(id);
@@ -198,12 +203,28 @@ function TodoItem({
                 tododata={tododata}
                 date_created={dato}
                 deleteTodo={deleteTodo}
+                editTodo={editTodo}
+                initialFocusRef={initialRef}
               />
             </Box>
           </GridItem>
 
           <GridItem fontSize="xs" colSpan="5" rowSpan="2" color="gray.400">
-            {description}
+            <Accordion allowMultiple>
+              <AccordionItem border="none">
+                <AccordionButton _expanded={{ color: 'gray.100' }}>
+                  <Box flex="2">
+                    <AccordionIcon />
+                  </Box>
+                </AccordionButton>
+                <AccordionPanel textAlign="left" pb="4">
+                  <Box fontSize="16px" color="gray.100">
+                    Description: <br />
+                  </Box>
+                  {description}
+                </AccordionPanel>
+              </AccordionItem>
+            </Accordion>
           </GridItem>
         </Grid>
       </ListItem>
