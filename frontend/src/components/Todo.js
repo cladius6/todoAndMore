@@ -60,6 +60,30 @@ function TodoItem({
       completeItem(id)
     }
 
+    function descriptionAccordion(){
+        if (description != ''){
+            return(
+          <Accordion allowMultiple grid="2">
+            <AccordionItem border="none">
+              <AccordionButton
+                _hover={{ boxShadow: 'inner' }}
+                p="0"
+                _expanded={{ color: 'gray.100' }}
+              >
+                <AccordionIcon fontSize="28px" flex="1" />
+              </AccordionButton>
+              <AccordionPanel textAlign="left" pb="4">
+                <Box fontSize="16px" color="gray.100">
+                  Description: <br />
+                </Box>
+                {description}
+              </AccordionPanel>
+            </AccordionItem>
+          </Accordion>
+            );
+        }
+    }
+
   return (
     <ListItem
       as="button"
@@ -86,23 +110,7 @@ function TodoItem({
         </GridItem>
         <GridItem colSpan="6" rowSpan="1">
           {content}
-          <Accordion allowMultiple grid="2">
-            <AccordionItem border="none">
-              <AccordionButton
-                _hover={{ boxShadow: 'inner' }}
-                p="0"
-                _expanded={{ color: 'gray.100' }}
-              >
-                <AccordionIcon fontSize="28px" flex="1" />
-              </AccordionButton>
-              <AccordionPanel textAlign="left" pb="4">
-                <Box fontSize="16px" color="gray.100">
-                  Description: <br />
-                </Box>
-                {description}
-              </AccordionPanel>
-            </AccordionItem>
-          </Accordion>
+          {descriptionAccordion()}
         </GridItem>
 
         <GridItem fontSize="xs" colSpan="2" rowSpan="1">
