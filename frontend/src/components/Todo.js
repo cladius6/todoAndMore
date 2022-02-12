@@ -12,6 +12,7 @@ import {
   AccordionButton,
   AccordionIcon,
   AccordionPanel,
+  VStack,
 } from '@chakra-ui/react';
 import { DeleteIcon, EditIcon } from '@chakra-ui/icons';
 import TodoExt from './TodoExt.js';
@@ -54,196 +55,112 @@ function TodoItem({
   const dato = new Date(date_created);
 
   function CheckboxTodo() {
-    let checked = false;
+    let checked = status ? true : false;
 
     const handleChange = () => {
       completeItem(id);
     };
-    if (status === true) {
       return (
-        <Box display="flex" alignItems="center">
-          <Checkbox
-            colorScheme='teal'
-          size='lg'
-            isChecked={!checked}
-            onChange={() => handleChange()}
-            flex="0"
-          />
-          <Box flex="1">{content}</Box>
-        </Box>
+        <Checkbox
+          id='checkbox'
+          size=''
+          colorScheme="teal"
+          isChecked={checked}
+          onChange={() => handleChange()}
+        />
       );
-    } else {
-      return (
-        <Box display="flex" alignItems="center">
-          <Checkbox
-            colorScheme='teal'
-          size='lg'
-            isChecked={checked}
-            onChange={() => handleChange()}
-            flex="0"
-          />
-          <Box flex="1">{content}</Box>
-        </Box>
-      );
-    }
-  }
+    }   
 
-  if (description === '') {
-    return (
-      <ListItem
-        as="button"
-        p="5px"
-        width="100%"
-        transition="all 200ms scale"
-        _hover={{ boxShadow: 'dark-lg' }}
-      >
-        <Grid
-          justify="center"
-          templateColumns="repeat(7,1fr)"
-        >
-          <GridItem fontSize="xl" colSpan="5" rowSpan="1">
-            {CheckboxTodo()}
-          </GridItem>
-          <GridItem fontSize="xs" colSpan="1" rowSpan="1">
-            <Box
-              display="flex"
-              justifyContent="center"
-              alignItems="center"
-              h="100%"
-            >
-              {creation.year}.{creation.month}.{creation.day} | {creation.time}
-            </Box>
-          </GridItem>
-          <GridItem fontSize="xs" colSpan="1" rowSpan="1">
-            <Box
-              display="flex"
-              justifyContent="center"
-              alignItems="center"
-              h="100%"
-            >
-              <IconButton
-                colorScheme='teal'
-                fontSize='lg'
-                mr="2"
-                aria-label="edit"
-                onClick={onOpen}
-                icon={<EditIcon />}
-              />
-              <IconButton
-                colorScheme='teal'
-                fontSize='lg'
-                aria-label="delete"
-                icon={<DeleteIcon />}
-                onClick={onOpenDel}
-              />
-              <TodoExt
-                isOpen={isOpen}
-                onClose={onClose}
-                isOpenDel={isOpenDel}
-                onCloseDel={onCloseDel}
-                tododata={tododata}
-                date_created={dato}
-                deleteTodo={deleteTodo}
-                editTodo={editTodo}
-                initialFocusRef={initialRef}
-              />
-            </Box>
-            <Box></Box>
-          </GridItem>
-        </Grid>
-      </ListItem>
-    );
-  } else {
-    return (
-      <ListItem
-        as="button"
-        p="5px"
-        width="100%"
-        transition="all
+  return (
+    <ListItem
+      as="button"
+      p="5px"
+      width="100%"
+      transition="all
                 200ms scale"
-        _hover={{ boxShadow: 'dark-lg' }}
+      _hover={{ boxShadow: 'dark-lg' }}
+    >
+      <Grid
+        justify="center"
+        templateColumns="repeat(12,1fr)"
+        templateRows="repeat(1, 1fr)"
       >
-        <Grid
-          justify="center"
-          templateColumns="repeat(7,1fr)"
-        >
-          <GridItem fontSize="xl" colSpan="5" rowSpan="1" p='0'>
+        <GridItem fontSize="xl" colSpan="2" rowSpan="1" p="0">
+          <Box display="flex" justifyContent="left" h="100%">
             {CheckboxTodo()}
-          </GridItem>
+          </Box>
+        </GridItem>
+        <GridItem colSpan="6" rowSpan="1">
+          {content}
+          <Accordion allowMultiple grid="2">
+            <AccordionItem border="none">
+              <AccordionButton
+                _hover={{ boxShadow: 'inner' }}
+                p="0"
+                _expanded={{ color: 'gray.100' }}
+              >
+                <AccordionIcon fontSize="28px" flex="1" />
+              </AccordionButton>
+              <AccordionPanel textAlign="left" pb="4">
+                <Box fontSize="16px" color="gray.100">
+                  Description: <br />
+                </Box>
+                {description}
+              </AccordionPanel>
+            </AccordionItem>
+          </Accordion>
+        </GridItem>
 
-          <GridItem fontSize="xs" colSpan="1" rowSpan="2">
-            <Box
-              display="flex"
-              justifyContent="center"
-              alignItems="center"
-              h="100%"
-            >
-              {creation.year}.{creation.month}.{creation.day} | {creation.time}
-            </Box>
-          </GridItem>
+        <GridItem fontSize="xs" colSpan="2" rowSpan="1">
+          <Box
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+            h="100%"
+          >
+            {creation.year}.{creation.month}.{creation.day} | {creation.time}
+          </Box>
+        </GridItem>
 
-          <GridItem fontSize="xs" colSpan="1" rowSpan="2">
-            <Box
-              display="flex"
-              justifyContent="center"
-              alignItems="center"
-              h="100%"
-            >
-              <IconButton
-                colorScheme='teal'
-                fontSize='lg'
-                mr="2"
-                aria-label="edit"
-                onClick={onOpen}
-                icon={<EditIcon />}
-              />
-              <IconButton
-                colorScheme='teal'
-                fontSize='lg'
-                aria-label="delete"
-                ref={initialRef}
-                icon={<DeleteIcon />}
-                onClick={onOpenDel}
-              />
-              <TodoExt
-                isOpen={isOpen}
-                onClose={onClose}
-                isOpenDel={isOpenDel}
-                onCloseDel={onCloseDel}
-                tododata={tododata}
-                date_created={dato}
-                deleteTodo={deleteTodo}
-                editTodo={editTodo}
-                initialFocusRef={initialRef}
-              />
-            </Box>
-          </GridItem>
-
-          <GridItem fontSize="xs" colSpan="5" rowSpan="2" color="gray.400">
-            <Accordion allowMultiple>
-              <AccordionItem border="none">
-                <AccordionButton
-                  _hover={{ boxShadow: 'inner' }}
-                  p="0"
-                  _expanded={{ color: 'gray.100' }}
-                  display="flex"
-                >
-                  <Box h="16px" w="16px" flex="none" />
-                  <AccordionIcon fontSize="28px" flex="1" />
-                </AccordionButton>
-                <AccordionPanel textAlign="left" pb="4">
-                  <Box fontSize="16px" color="gray.100">
-                    Description: <br />
-                  </Box>
-                  {description}
-                </AccordionPanel>
-              </AccordionItem>
-            </Accordion>
-          </GridItem>
-        </Grid>
-      </ListItem>
-    );
-  }
+        <GridItem fontSize="xs" colSpan="2" rowSpan="1">
+          <Box
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+            h="100%"
+          >
+            <IconButton
+              colorScheme="teal"
+              fontSize="lg"
+              mr="2"
+              aria-label="edit"
+              onClick={onOpen}
+              icon={<EditIcon />}
+            />
+            <IconButton
+              colorScheme="teal"
+              fontSize="lg"
+              aria-label="delete"
+              ref={initialRef}
+              icon={<DeleteIcon />}
+              onClick={onOpenDel}
+            />
+            <TodoExt
+              isOpen={isOpen}
+              onClose={onClose}
+              isOpenDel={isOpenDel}
+              onCloseDel={onCloseDel}
+              tododata={tododata}
+              date_created={dato}
+              deleteTodo={deleteTodo}
+              editTodo={editTodo}
+              initialFocusRef={initialRef}
+            />
+          </Box>
+        </GridItem>
+      </Grid>
+    </ListItem>
+  );
 }
 
 const Todo = ({
