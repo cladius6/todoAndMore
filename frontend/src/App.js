@@ -1,97 +1,109 @@
-import {React, useState, useEffect} from 'react';
+import { React, useState, useEffect } from 'react';
 import {
-	ChakraProvider,
-	Container,
-	Heading,
-	Box,
-	List,
+  ChakraProvider,
+  Container,
+  Heading,
+  Box,
+  List,
 } from '@chakra-ui/react';
-import { Logo } from './Logo';
 
-import axios from 'axios'
+import axios from 'axios';
 
-import Todo from './components/Todo.js'
-import AddTodo from './components/AddTodo.js'
+import Todo from './components/Todo.js';
+import AddTodo from './components/AddTodo.js';
 import theme from './theme.js';
 
 function App() {
-	const [todos, setTodos] = useState([])
-    const viewsetlink = '/api/v1/' 
+  const [todos, setTodos] = useState([]);
+  const viewsetlink = '/api/v1/';
 
-	const getTodos = async () => {
-		try {
-			const response = await axios.get(viewsetlink + 'todo/')
-			const { data } = response
-			setTodos(data)
-		} catch (err) {
-			console.log(err)
-		}
-	}
-
-	useEffect(() => {
-		getTodos()
-	}, [])
-
-	const addTodo = async newTodo => {
-		try {
-			console.log(newTodo)
-			await axios.post(viewsetlink + 'todo/', newTodo)
-			getTodos()
-            const form = document.getElementById('todo_add_form')
-            form.reset()
-		}catch(err){
-			console.log(err)
-		}
-	}
-
-    const completeTodo = async (id,ref) => {
-        try {
-            const todo = todos.filter(todo => todo.id === id)[0]
-            if (todo.status == true){
-                todo.status = false 
-            }else{
-                todo.status = true
-            }
-            await axios.put(viewsetlink + '/todo/' + id + '/', todo)
-            // ref.current.focus()
-        }catch(err) {
-            console.log(err)
-        }
+  const getTodos = async () => {
+    try {
+      const response = await axios.get(viewsetlink + 'todo/');
+      const { data } = response;
+      setTodos(data);
+    } catch (err) {
+      console.log(err);
     }
+  };
 
-    const deleteTodo = async id => {
-        try{
-            await axios.delete(viewsetlink + 'todo/' + id + '/')
-            getTodos()
-        } catch(err) {
-            console.log(err)
-        }
+  useEffect(() => {
+    getTodos();
+  }, []);
+
+  const addTodo = async newTodo => {
+    try {
+      console.log(newTodo);
+      await axios.post(viewsetlink + 'todo/', newTodo);
+      getTodos();
+      const form = document.getElementById('todo_add_form');
+      form.reset();
+    } catch (err) {
+      console.log(err);
     }
+  };
 
-	return (
-		<ChakraProvider theme={theme}>
-            <Box>
-                <Container maxW='container.xl' centerContent>
-                    <Heading>ToDo</Heading>
-                    <AddTodo addTodo={addTodo}/>
-                    <List width='100%' mt='5' fontSize='20px'>
-                        {todos.map((todo, index) => (
-                            <Todo 
-                            key={index} 
-                            id={todo.id} 
-                            content={todo.name} 
-                            description={todo.description} 
-                            status={todo.status}
-                            date_created={todo.date_created} 
-                            deadline={todo.deadline} 
-                            deleteTodo={deleteTodo}
-                            completeItem={completeTodo}
-                            />
-                        ))}
-                    </List>
-                </Container>
-            </Box>
-		</ChakraProvider>
+  const completeTodo = async id => {
+    try {
+      const todo = todos.filter(todo => todo.id === id)[0];
+      if (todo.status === true) {
+        todo.status = false;
+      } else {
+        todo.status = true;
+      }
+      await axios.put(viewsetlink + '/todo/' + id + '/', todo);
+      await getTodos();
+      return todo.status;
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const editTodo = async todo => {
+    try {
+      console.log(todo);
+      await axios.put(`/api/v1/todo/${todo.id}/`, todo);
+      getTodos();
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const deleteTodo = async id => {
+    try {
+      await axios.delete(viewsetlink + 'todo/' + id + '/');
+      getTodos();
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  return (
+    <ChakraProvider theme={theme}>
+      <Box>
+        <Container maxW="container.xl" centerContent>
+          <Heading>ToDo</Heading>
+          <AddTodo addTodo={addTodo} />
+          <List width="100%" mt="5" fontSize="20px">
+            {todos.map((todo, index) => (
+              <Todo
+                key={index}
+                id={todo.id}
+                content={todo.name}
+                description={todo.description}
+                status={todo.status}
+                date_created={todo.date_created}
+                deadline={todo.deadline}
+                priority={todo.priority}
+                deleteTodo={deleteTodo}
+                completeItem={completeTodo}
+                editTodo={editTodo}
+              />
+            ))}
+          </List>
+        </Container>
+      </Box>
+    </ChakraProvider>
   );
 }
 
