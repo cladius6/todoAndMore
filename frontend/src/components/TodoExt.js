@@ -18,6 +18,7 @@ import {
   NumberIncrementStepper,
   NumberDecrementStepper,
   Switch,
+  Textarea,
 } from '@chakra-ui/react';
 
 import DatePicker from './DatePicker.js';
@@ -73,7 +74,7 @@ function EditModal({ isOpen, onClose, date_created, tododata, editTodo }) {
                   {({ field, form }) => (
                     <FormControl>
                       <FormLabel>Description</FormLabel>
-                      <Input {...field} id="description" placeholder={desc} />
+                      <Textarea {...field} id="description" placeholder='Optional description.' />
                     </FormControl>
                   )}
                 </Field>
